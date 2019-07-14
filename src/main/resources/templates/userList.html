@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"
+	rel="stylesheet">
+
+<!-- BOOTSTRAP DEPENDENCIES END-->
+<title>User List</title>
+</head>
+<body>
+	<div th:replace="menu :: header">
+	</div>
+
+	<div class="container">
+		<div class="hero-unit">
+			<H2>User List</H2>
+			<table id="myTable">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>User Name</th>
+						<th>User Type</th>
+						<th>Status</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${users.empty}">
+						<td colspan="2">No Users</td>
+					</tr>
+					<tr th:each="user : ${users}">
+						<td><span th:text="${user.id}"> Id </span></td>
+						<td><span th:text="${user.userName}"> User Name </span></td>
+						<td><span th:text="${user.userType}"> User Type </span></td>
+						<td><span th:text="${user.status}"> Status </span></td>
+						<td><a th:href="@{'/suspendUser/' + ${user.id}}">Suspend User</a></td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+	<script src="webjars/jquery/2.1.4/jquery.min.js"></script>
+	<script src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+</body>
+<script>
+$(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+</script>
+</html>

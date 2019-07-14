@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="ISO-8859-1">
+<link href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://editor-latest.s3.amazonaws.com/v3/css/froala_editor.pkgd.min.css"
+	rel="stylesheet">
+<!-- BOOTSTRAP DEPENDENCIES END-->
+<title>Create Post</title>
+</head>
+<body>
+	<div th:replace="menu :: header"></div>
+	<div class="container">
+		<!-- Blog Post Form -->
+		<H2>Publish To Date</H2>
+		<form action="#" th:action="@{/PublishBlog}" th:object="${post}"  method="post" >
+			<div class="col-md-12">
+				<img th:src="${'/blogImage/'+post.image}" style="width: 70px">
+				<b><span th:text="${post.title}"> </span></b><br>
+				<p th:utext="${post.content}"></p>
+				<br>
+			</div>
+			<div class="col-md-12">
+				<input
+					type="hidden" id="id" class="form-control" name="id"
+					th:field="*{id}">
+			</div>
+			<div class="col-md-4">
+				<label for="title"><b>Publish to date :</b></label> <input
+					type="date" id="date" class="form-control" name="date"
+					th:field="*{date}"> <label
+					th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></label>
+			</div>
+			<br><br>
+			<div class="col-md-12">
+				<button type="submit" class="btn btn-primary">Create</button>
+			</div>
+
+			<div class="alert alert-success fade in alert-dismissible show"
+				th:if="${message}">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true" style="font-size: 20px">×</span>
+				</button>
+				<span th:text="${message}"></span>
+			</div>
+		</form>
+	</div>
+	<script src="/webjars/jquery/2.1.4/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script
+		src="https://editor-latest.s3.amazonaws.com/v3/js/froala_editor.pkgd.min.js"></script>
+	<script>
+		new FroalaEditor('textarea#froala-editor')
+	</script>
+</body>
+</html>

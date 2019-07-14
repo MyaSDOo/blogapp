@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"
+	rel="stylesheet">
+
+<!-- BOOTSTRAP DEPENDENCIES END-->
+<title>Posts</title>
+</head>
+<body>
+	<div th:replace="menu :: header"></div>
+
+	<div class="container">
+		<div class="hero-unit">
+			<H2>Posts</H2>
+			<table id="myTable">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Title</th>
+						<th>Content</th>
+						<th>Status</th>
+						<th>Published Date</th>
+						<th>Action</th>
+						<th th:if="${session.user.userType} == 'admin'"></th>
+						<th th:if="${session.user.userType} == 'admin'"></th>
+						<th th:if="${session.user.userType} == 'admin'"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${blogposts.empty}">
+						<td colspan="2">No Post</td>
+					</tr>
+					<tr th:each="blogpost : ${blogposts}">
+						<td><span th:text="${blogpost.id}"> Id </span></td>
+						<td><span th:text="${blogpost.title}"> Title </span></td>
+						<td><p th:utext="${blogpost.content}"></p></td>
+						<td><span th:text="${blogpost.status}"> Status </span></td>
+						<td><span th:text="${blogpost.date}"> Published Date </span></td>
+						<td th:if="${session.user.userType} != 'admin'"><a
+							th:href="@{'/ReadytoPublishBlog/' + ${blogpost.id}}"
+							class="btn btn-primary">Ready to publish</a></td>
+						<td th:if="${session.user.userType} == 'admin'"><a
+							th:href="@{'/approveBlog/' + ${blogpost.id}}"
+							class="btn btn-primary">Approve</a></td>
+						<td th:if="${session.user.userType} == 'admin'"><a
+							th:href="@{'/RejectBlog/' + ${blogpost.id}}"
+							class="btn btn-primary">Reject</a></td>
+						<td th:if="${session.user.userType} == 'admin'"><a href='#'
+							class="btn btn-primary btnPublish" th:href="@{'/PublishBlog/' + ${blogpost.id}}">Publish</a></td>
+						<td th:if="${session.user.userType} == 'admin'"><a
+							th:href="@{'/archieveBlog/' + ${blogpost.id}}"
+							class="btn btn-primary">Archieved</a></td>
+
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+
+
+	<script src="webjars/jquery/2.1.4/jquery.min.js"></script>
+	<script src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+</body>
+<script>
+	$(document).ready(function() {
+		$('#myTable').DataTable();
+
+	});
+</script>
+</html>
